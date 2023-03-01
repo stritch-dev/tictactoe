@@ -4,15 +4,34 @@ const X = 'X'
 const O= 'O'
 
 
-let board = [ 0, 1, 2,
-		3, 4, 5, 
-		6, 7, 8 ]
+/*
+  board = [ 0, 1, 2,
+            3, 4, 5, 
+            6, 7, 8 ]
+*/
+
+  const  board = [ " ", " ", " ", " ", " ", " ", " ", " ", " " ]
 
 		function isOccupied(space){
 			if (board.space == X) { return X }
 			else if (board.space == O) { return O }
 			else return false
 		}
+
+function displayBoard(){
+  const horizontal = "--|---|--"
+	const verticalBar = " | "
+  const top = board[0] + verticalBar + board[1] + verticalBar + board[2] 
+  const middle = board[3] + verticalBar + board[4] + verticalBar + board[5] 
+  const bottom  = board[6] + verticalBar + board[7] + verticalBar + board[8]
+
+	log( " " )
+	log( top )
+	log( horizontal )
+	log( middle )
+	log( horizontal )
+	log( bottom )
+}
 
 function placePlayer (player, space){
 	if (isOccupied(space)) { return false }
@@ -70,7 +89,14 @@ function isWinner(player) {
 }
 
 function xTurn(){
-  const space = prompt("X, Won't you please choose a space. ")
+	displayBoard()
+	log( " " )
+  const space = prompt("X, Won't you please choose a space. \n \n")
+	if(isOccupied(space)){
+	 log("That space has already been taken.")
+	 xTurn()
+	}
+
 	placePlayer(X, Number(space))
 		if(isWinner(X)) { 
 			log( "X won." ) 
@@ -79,12 +105,14 @@ function xTurn(){
 }
 
 function oTurn(){
-  const space = prompt("O, Won't you please choose a space. ")
-	placePlayer(O, 2)
+	displayBoard()
+	log( " " )
+  const space = prompt("O, Won't you please choose a space. \n \n")
+	placePlayer(O, Number(space))
 		if(isWinner(O)) { 
       log( "O won." ) 
 			process.exit(0) 
-		}
+	}
 }
 
 
