@@ -1,86 +1,108 @@
+const prompt = require('prompt-sync')({sigint: true})
 
 const X = 'X' 
 const O= 'O'
 
 
 let board = [ 0, 1, 2,
-                3, 4, 5, 
-                6, 7, 8 ]
+		3, 4, 5, 
+		6, 7, 8 ]
 
-function isOccupied(space){
-  console.log("- - - - - - - - isOccupied  - - - - - - ")
-  console.log("space ", space)
-  if (board.space == X) { return X }
-  else if (board.space == O) { return O }
-  else return false
-}
+		function isOccupied(space){
+			if (board.space == X) { return X }
+			else if (board.space == O) { return O }
+			else return false
+		}
 
 function placePlayer (player, space){
-  console.log("- - - - - - - - placePlayer  - - - - - - ")
-  console.log("player -", player)
-  console.log("space -", space)
-pb()
-  if (isOccupied) { return false }
-  else { 
-pb()
-    board[space] = player 
-pb()
-    return true
-  }
+	if (isOccupied(space)) { return false }
+	else { 
+		board[space] = player 
+			return true
+	}
+}
+
+function everyX(row){
+	let result = false;
+	for(let i=0; i < row.length; i++){
+		if(row[i] === X) { result = true }
+		else { result = false}
+	}
+	return result
+}
+
+
+function everyO(row){
+	let result = false;
+	for(let i=0; i < row.length; i++){
+		if(row[i] === O) { result = true }
+		else { result = false}
+	}
+	return result
 }
 
 function isWinner(player) {
-  console.log("- - - - - - - - isWinner  - - - - - - ")
-  const top = [0,1,2]
-  const horizontalMiddle = [3,4,5]
-  const bottom = [6,7,8]
-  const left = [0,4,8]
-  const verticalCenter = [1,4,7]
-  const right = [2,5,8]
-  const topLeftToBottomRight = [0,4,8]
-  const topRightToBottomLeft = [2,4,6]
+	// top
+	if ( board[0] === player && board[1] === player && board[2] === player) { return true }
 
-  if (top.every( value => value === X || value === O))  return top[0] 
-  if (horizontalMiddle.every( value => value === X || value === O)) return top[0] 
-  if (bottom.every( value => value === X || value === O)) return top[O]
-  if (left.every( value => value === X || value === O)) return top[0] 
-  if (verticalCenter.every( value => value === X || value === O)) return top[0] 
-  if (right.every( value => value === X || value === O)) return top[0] 
-  if (topLeftToBottomRight.every( value => value === X || value === O)) return top[0] 
-  if (topRightToBottomLeft.every( value => value === X || value === O)) return top[0] 
+	// horizontalMiddle
+	if ( board[3] === player && board[4] === player && board[5] === player) { return true }
+
+	// bottom
+	if ( board[6] === player && board[7] === player && board[8] === player) { return true }
+
+	// left
+	if ( board[0] === player && board[3] === player && board[6] === player) { return true }
+
+	// verticalCenter
+	if ( board[1] === player && board[4] === player && board[7] === player) { return true }
+
+	// right
+	if ( board[2] === player && board[5] === player && board[8] === player) { return true }
+
+	// topLeftToBottomRight
+	if ( board[0] === player && board[4] === player && board[8] === player) { return true }
+
+	// topRightToBottomLeft
+	if ( board[2] === player && board[4] === player && board[6] === player) { return true }
+
+	return false
 }
 
-function nextPlayer(player){
-  console.log("- - - - - - - - nextPlayer  - - - - - - ")
-  const next = player === X ? O : X  
-  return next
+function xTurn(){
+  const space = prompt("X, Won't you please choose a space. ")
+	placePlayer(X, Number(space))
+		if(isWinner(X)) { 
+			log( "X won." ) 
+      process.exit(0) 
+  }
 }
 
-function pb() {
-	console.log(board)
+function oTurn(){
+  const space = prompt("O, Won't you please choose a space. ")
+	placePlayer(O, 2)
+		if(isWinner(O)) { 
+      log( "O won." ) 
+			process.exit(0) 
+		}
 }
+
+
+function round(){
+	xTurn()
+	oTurn()
+}
+
+function log(value){ console.log(value) }
+function pb() { log(board) }
 
 function game(){
-  console.log("- - - - - - - - game  - - - - - - ")
-  //pb() 
-  placePlayer(X, 0)
-  placePlayer(O, 1)
-
-  //pb()
-  placePlayer(X, 2)
-  placePlayer(O, 3)
-
-//
-  //pb()
-  placePlayer(X, 4)
-  placePlayer(O, 5)
-
-
-  //pb()
-  placePlayer(X, 6)
-  placePlayer(O, 7)
-
-  //pb()
+ 	round()
+ 	round()
+ 	round()
+ 	round()
+ 	round()
+	console.log("There are no winners.")
 }
 
 game()
