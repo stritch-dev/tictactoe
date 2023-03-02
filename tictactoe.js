@@ -11,8 +11,9 @@ const O= 'O'
 */
 
 const  board = [ " ", " ", " ", " ", " ", " ", " ", " ", " " ]
+const isOccupied = space => board[space] === X || board[space] === O 
+const isOpen = space => !isOccupied(space)
 
-const isOccupied = (space) => board[space] === X || board[space] === O 
 
 function displayBoard(){
   const horizontal = "--|---|--"
@@ -30,11 +31,7 @@ function displayBoard(){
 }
 
 function placePlayer (player, space){
-	if (isOccupied(space)) { return false }
-	else { 
-		board[space] = player 
-			return true
-	}
+	isOpen(space) && (board[space] = player)
 }
 
 
