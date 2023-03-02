@@ -1,14 +1,7 @@
 const prompt = require('prompt-sync')({sigint: true})
 
-function getChar() {
-  let buffer = Buffer.alloc(1)
-  fs.readSync(0, buffer, 0, 1)
-  return buffer.toString('utf8')
-}
-
 const X = 'X' 
 const O= 'O'
-
 
 /*
 	board layout
@@ -19,11 +12,7 @@ const O= 'O'
 
 const  board = [ " ", " ", " ", " ", " ", " ", " ", " ", " " ]
 
-function isOccupied(space){
-	if (board[space] === X) { return X }
-	else if (board[space] === O) { return O }
-	else return false
-}
+const isOccupied = (space) => board[space] === X || board[space] === O 
 
 function displayBoard(){
   const horizontal = "--|---|--"
@@ -48,24 +37,6 @@ function placePlayer (player, space){
 	}
 }
 
-function everyX(row){
-	let result = false;
-	for(let i=0; i < row.length; i++){
-		if(row[i] === X) { result = true }
-		else { result = false}
-	}
-	return result
-}
-
-
-function everyO(row){
-	let result = false;
-	for(let i=0; i < row.length; i++){
-		if(row[i] === O) { result = true }
-		else { result = false}
-	}
-	return result
-}
 
 function isWinner(player) {
 	if ( board[0] === player && board[1] === player && board[2] === player) { return true } // top
@@ -82,27 +53,27 @@ function isWinner(player) {
 
 function turn(player){
 	displayBoard()
-	log( " " )
-  log(`${player}, it's your turn. \n \n`)
+  log(`${player}, it's your turn. `)
   const space = prompt()
 	if(isOccupied(space)){
 	 log("** That space has already been taken. **")
 	 turn(player)
 	}
 	if(space.length > 1){
-	log("one")
 	 log("\n \n ** Please enter a a single digit from 0-8 for a space that is not occupied.  Here is the current board **")
 	 turn(player)
 	}
 	if(! [0,1,2,3,4,5,6,7,8].includes(Number(space))){
-	log("two")
-	 log("\n \n ** You may only  enter a number 0-8 **") 
+	 log("\n \n ** You may only enter a number 0-8 **") 
 	 turn(player)
 	}
 
 	placePlayer(player, Number(space))
 		if(isWinner(player)) { 
-			log( `${player} won.` ) 
+			log( `\n! ! !         ! ! !` ) 
+			log( `! ! !  ${player} won  ! ! !` ) 
+			log( `! ! !         ! ! !` ) 
+			displayBoard()
       process.exit(0) 
   }
 }
