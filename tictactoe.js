@@ -1,26 +1,26 @@
 const prompt = require('prompt-sync')({sigint: true})
 
 const X = 'X' 
-const O= 'O'
+const Oh = 'O'
 
 /*
 	board layout
-	0, 1, 2,
-	3, 4, 5, 
-	6, 7, 8 
+	1, 2, 3,
+	4, 5, 6, 
+	7, 8, 9 
 */
 
-const  board = [ " ", " ", " ", " ", " ", " ", " ", " ", " " ]
-const isOccupied = space => board[space] === X || board[space] === O 
+const  board = ["not used", " ", " ", " ", " ", " ", " ", " ", " ", " " ]
+const isOccupied = space => board[space] === X || board[space] === Oh
 const isOpen = space => !isOccupied(space)
 
 
-function displayBoard(){
+const displayBoard = function (){
   const horizontal = "--|---|--"
 	const verticalBar = " | "
-  const top = board[0] + verticalBar + board[1] + verticalBar + board[2] 
-  const middle = board[3] + verticalBar + board[4] + verticalBar + board[5] 
-  const bottom  = board[6] + verticalBar + board[7] + verticalBar + board[8]
+  const top = board[1] + verticalBar + board[2] + verticalBar + board[3] 
+  const middle = board[4] + verticalBar + board[5] + verticalBar + board[6] 
+  const bottom  = board[7] + verticalBar + board[8] + verticalBar + board[9]
 
 	log( " " )
 	log( top )
@@ -30,38 +30,45 @@ function displayBoard(){
 	log( bottom )
 }
 
-function placePlayer (player, space){
+const placePlayer = function (player, space){
 	isOpen(space) && (board[space] = player)
 }
 
+const isWinner  = function (player) {
+  log("here")
+	if ( board[1] === player && board[2] === player && board[3] === player) { return true } // top
+	if ( board[4] === player && board[5] === player && board[6] === player) { return true } // horizontalMiddle
+	if ( board[7] === player && board[8] === player && board[9] === player) { return true } // bottom
+	if ( board[1] === player && board[4] === player && board[7] === player) { return true } // left
+	if ( board[2] === player && board[5] === player && board[8] === player) { return true } // verticalCenter
+	if ( board[3] === player && board[6] === player && board[9] === player) { return true } // right
+	if ( board[1] === player && board[5] === player && board[9] === player) { return true } // topLeftToBottomRight
+	if ( board[3] === player && board[5] === player && board[7] === player) { return true } // topRightToBottomLeft
 
-function isWinner(player) {
-	if ( board[0] === player && board[1] === player && board[2] === player) { return true } // top
-	if ( board[3] === player && board[4] === player && board[5] === player) { return true } // horizontalMiddle
-	if ( board[6] === player && board[7] === player && board[8] === player) { return true } // bottom
-	if ( board[0] === player && board[3] === player && board[6] === player) { return true } // left
-	if ( board[1] === player && board[4] === player && board[7] === player) { return true } // verticalCenter
-	if ( board[2] === player && board[5] === player && board[8] === player) { return true } // right
-	if ( board[0] === player && board[4] === player && board[8] === player) { return true } // topLeftToBottomRight
-	if ( board[2] === player && board[4] === player && board[6] === player) { return true } // topRightToBottomLeft
-
+  log("there")
 	return false
 }
 
-function turn(player){
+const turn = function(player, chosenSpace){
+  let space = chosenSpace;
 	displayBoard()
   log(`${player}, it's your turn. `)
-  const space = prompt()
+	if (space == null){
+		space = prompt()
+		log(`two space = ${space} `)
+	}
 	if(isOccupied(space)){
 	 log("** That space has already been taken. **")
+		log(`three space = ${space} `)
 	 turn(player)
 	}
 	if(space.length > 1){
-	 log("\n \n ** Please enter a a single digit from 0-8 for a space that is not occupied.  Here is the current board **")
+		log(`force space = ${space} `)
+	 log("\n \n ** Please enter a a single digit from 1-9 for a space that is not occupied.  Here is the current board **")
 	 turn(player)
 	}
-	if(! [0,1,2,3,4,5,6,7,8].includes(Number(space))){
-	 log("\n \n ** You may only enter a number 0-8 **") 
+	if(! [1,2,3,4,5,6,7,8,9].includes(Number(space))){
+	 log("\n \n ** You may only enter a number 1-8 **") 
 	 turn(player)
 	}
 
@@ -75,15 +82,15 @@ function turn(player){
   }
 }
 
-function round(){
+const round = function(){
 	turn(X)
-	turn(O)
+	turn(Oh)
 }
 
-function log(value){ console.log(value) }
-function pb() { log(board) }
+const log = function (value){ console.log(value) }
+const pb = function () { log(board) }
 
-function game(){
+const game = function (){
  	round()
  	round()
  	round()
@@ -92,4 +99,5 @@ function game(){
 	console.log("There are no winners.")
 }
 
-game()
+
+module.exports = {game, turn, displayBoard, board, isWinner}
