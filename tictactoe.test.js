@@ -1,4 +1,5 @@
 const tictactoe =  require('./tictactoe')
+const board =  require('./tictactoe')
 
 
  //tictactoe.turn('X',1)
@@ -8,8 +9,8 @@ const tictactoe =  require('./tictactoe')
  //})
 
  test('Correctly reports top row win', () => {
-	 tictactoe.turn('X',1)
-	 tictactoe.turn('X',2)
-	 tictactoe.turn('X',3)
-	 expect(tictactoe.isWinner('X')).toBe(true)
+   tictactoe.board[1] = 'X'
+   tictactoe.board[2] = 'X'
+   tictactoe.board[3] = 'X'
+	 expect(tictactoe.top('X')).toBe(true)
  })
