@@ -107,4 +107,18 @@ const game = function (){
 }
 
 
-module.exports = {game, turn, displayBoard, board, isWinner, top}
+module.exports = {
+	game, 
+	turn,
+	displayBoard,
+	board,
+	isWinner,
+	top, 
+	horizontalMiddle,
+	bottom,
+	left,
+	verticalCenter,
+	right,
+	topLeftToBottomRight,
+	topRightToBottomLeft
+}
