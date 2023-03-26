@@ -10,7 +10,7 @@ const Oh = 'O'
 	7, 8, 9 
 */
 
-const  board = ["not used", " ", " ", " ", " ", " ", " ", " ", " ", " " ]
+const board = ["not used", " ", " ", " ", " ", " ", " ", " ", " ", " " ]
 const isOccupied = space => board[space] === X || board[space] === Oh
 const isOpen = space => !isOccupied(space)
 
@@ -23,9 +23,9 @@ const displayBoard = function (){
 
 	log( " " )
 	log( top )
-	log( horizontal )
+ 	log( horizontal )
 	log( middle )
-	log( horizontal )
+  log( horizontal )
 	log( bottom )
 }
 
@@ -43,9 +43,7 @@ const topLeftToBottomRight = player  => board[1] === player && board[5] === play
 const topRightToBottomLeft = player  => board[3] === player && board[5] === player && board[7] === player
 
 const isWinner  = function (player) {
-	log("+- isWinner")
-	log(board)
-		return 
+  let win = 
 		top(player) ||
 		horizontalMiddle (player) ||
 		bottom (player) ||
@@ -54,6 +52,8 @@ const isWinner  = function (player) {
 		right (player) ||
 		topLeftToBottomRight (player) ||
 		topRightToBottomLeft (player)
+
+		return win
 }
 
 const turn = function(player, chosenSpace){
@@ -62,11 +62,9 @@ const turn = function(player, chosenSpace){
 		log(`${player}, it's your turn. `)
 		if (space == null){
 			space = prompt()
-				log(`two space = ${space} `)
 		}
 	if(isOccupied(space)){
 		log("** That space has already been taken. **")
-			log(`three space = ${space} `)
 			turn(player)
 	}
 	if(space.length > 1){
@@ -82,10 +80,10 @@ const turn = function(player, chosenSpace){
 	placePlayer(player, Number(space))
 		if(isWinner(player)) { 
 			log( `\n! ! !         ! ! !` ) 
-				log( `! ! !  ${player} won  ! ! !` ) 
-				log( `! ! !         ! ! !` ) 
-				displayBoard()
-				process.exit(0) 
+			log( `! ! !  ${player} won  ! ! !` ) 
+			log( `! ! !         ! ! !` ) 
+			displayBoard()
+			process.exit(0) 
 		}
 }
 
@@ -106,10 +104,12 @@ const game = function (){
 		console.log("There are no winners.")
 }
 
+game()
 
 module.exports = {
 	game, 
 	turn,
+	placePlayer,
 	displayBoard,
 	board,
 	isWinner,
