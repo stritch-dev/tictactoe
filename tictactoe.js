@@ -4,29 +4,27 @@ const X = 'X'
 const Oh = 'O'
 
 /*
-	board layout
-	1, 2, 3,
-	4, 5, 6, 
-	7, 8, 9 
-*/
+	 board layout
+	 1, 2, 3,
+	 4, 5, 6, 
+	 7, 8, 9 
+ */
 
 const board = ["not used", " ", " ", " ", " ", " ", " ", " ", " ", " " ]
-const isOccupied = space => board[space] === X || board[space] === Oh
-const isOpen = space => !isOccupied(space)
+const isOpen = space => board[space] === " "
+const isOccupied = space => !isOpen(space)
 
 const displayBoard = function (){
-  const horizontal = "--|---|--"
-	const verticalBar = " | "
-  const top = board[1] + verticalBar + board[2] + verticalBar + board[3] 
-  const middle = board[4] + verticalBar + board[5] + verticalBar + board[6] 
-  const bottom  = board[7] + verticalBar + board[8] + verticalBar + board[9]
+	const horizontal = "--|---|--\n"
+	const vertical = " | "
+	log( 
+	 board[1] + vertical + board[2] + vertical + board[3]  + "\n" +
+	 horizontal +
+	 board[4] + vertical + board[5] + vertical + board[6] + "\n" +
+	 horizontal +
+	 board[7] + vertical + board[8] + vertical + board[9]
+	)
 
-	log( " " )
-	log( top )
- 	log( horizontal )
-	log( middle )
-  log( horizontal )
-	log( bottom )
 }
 
 const placePlayer = function (player, space){
@@ -43,7 +41,8 @@ const topLeftToBottomRight = player  => board[1] === player && board[5] === play
 const topRightToBottomLeft = player  => board[3] === player && board[5] === player && board[7] === player
 
 const isWinner  = function (player) {
-  let win = 
+log ("+is winner")
+	const win = 
 		top(player) ||
 		horizontalMiddle (player) ||
 		bottom (player) ||
@@ -52,32 +51,19 @@ const isWinner  = function (player) {
 		right (player) ||
 		topLeftToBottomRight (player) ||
 		topRightToBottomLeft (player)
-
+		log("win is " + win)
+		log("- isWinner")
 		return win
 }
 
-const turn = function(player, chosenSpace){
-	let space = chosenSpace;
+const turn = function(player){
+  log("+ turn")
 	displayBoard()
-		log(`${player}, it's your turn. `)
-		if (space == null){
-			space = prompt()
-		}
-	if(isOccupied(space)){
-		log("** That space has already been taken. **")
-			turn(player)
-	}
-	if(space.length > 1){
-		log(`force space = ${space} `)
-			log("\n \n ** Please enter a a single digit from 1-9 for a space that is not occupied.  Here is the current board **")
-			turn(player)
-	}
-	if(! [1,2,3,4,5,6,7,8,9].includes(Number(space))){
-		log("\n \n ** You may only enter a number 1-8 **") 
-			turn(player)
-	}
+	itsYourTurn(player)
 
+	const space = getValidSpace(player);
 	placePlayer(player, Number(space))
+	log("place player")
 		if(isWinner(player)) { 
 			log( `\n! ! !         ! ! !` ) 
 			log( `! ! !  ${player} won  ! ! !` ) 
@@ -85,40 +71,58 @@ const turn = function(player, chosenSpace){
 			displayBoard()
 			process.exit(0) 
 		}
+  log("- turn")
 }
 
 const round = function(){
+  log("+ round")
 	turn(X)
-		turn(Oh)
+	turn(Oh)
+  log("- round")
+}
+
+const getValidSpace = player => {
+  log("+ getValidSpace")
+	const space = Number(prompt())
+
+	if([1,2,3,4,5,6,7,8,9].includes(Number(space))){
+  log("- getValidSpace")
+			return space
+	} else if(space.length > 1){
+		log("\n \n ** Please enter a single digit from 1-9 for a space that is not occupied.  Here is the current board **")
+  log("- getValidSpace")
+		return getValidSpace (player, prompt())
+	}
 }
 
 const log = function (value){ console.log(value) }
-const pb = function () { log(board) }
+const itsYourTurn = (player) =>	log(`${player}, it's your turn. `)
 
 const game = function (){
 	round()
-		round()
-		round()
-		round()
-		turn(X)
-		console.log("There are no winners.")
+	round()
+	round()
+	round()
+	turn(X)
+	console.log("There are no winners.")
 }
 
-game()
 
-module.exports = {
-	game, 
-	turn,
-	placePlayer,
-	displayBoard,
-	board,
-	isWinner,
-	top, 
-	horizontalMiddle,
-	bottom,
-	left,
-	verticalCenter,
-	right,
-	topLeftToBottomRight,
-	topRightToBottomLeft
-}
+	module.exports = {
+		game, 
+		turn,
+		placePlayer,
+		displayBoard,
+		board,
+		isWinner,
+		top, 
+		horizontalMiddle,
+		bottom,
+		left,
+		verticalCenter,
+		right,
+		topLeftToBottomRight,
+		topRightToBottomLeft,
+		isOccupied,
+		isOpen
+	}
