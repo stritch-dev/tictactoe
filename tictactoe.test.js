@@ -27,28 +27,63 @@ describe("Reports whether space is taken or not.", () => {
 
 	})
 
-
-
-describe.skip.each("Placement", () => {
-    test.skip("Places player in valid unclaimed spot", () => {
+describe("Placement", () => {
+    test("Places player in valid unclaimed spot", () => {
 		tictactoe.placePlayer(X,4)
 	})
 
-  test.skip("Does not let player take an occupied spot", () => {
+  test("Does not let player take an occupied spot", () => {
 		tictactoe.placePlayer(X,4)
 		tictactoe.placePlayer("O",4)
 		expect(tictactoe.board[4]).toBe(X)
 	})
 
-	// TODO fix this
+	// TODO find a way to test this so that it does not actually wait for user input.
   test.skip("Allows input to be only 1-9",  () => {
-		tictactoe.placePlayer("O",4)
-		expect(tictactoe.board[0]).toBe(tictactoe.blankBoard)
+		const mockPrompt = jest.fn(() => 1)
+		global.prompt = mockPrompt()
+		const isOpen = jest.fn(()=>true)
+		const spy = jest.spyOn(console, "log")
+		const expected = "** Please enter a single digit from 1-9 for a space that is not occupied. **"
+
+		tictactoe.getValidSpace(10,isOpen, mockPrompt)
+
+		expect(spy).toHaveBeenCalledWith(expected)
 	})
+
+
+
+// TODO fix this so that it works. Right now it waits for user input from the keyboard.
+test.skip('produces correct log message when input is invalid', () => {
+  // Mock the prompt function to return an invalid input
+  const mockPrompt = jest.fn(() => '0');
+  global.prompt = mockPrompt;
+
+  // Mock the isOpen function to always return false
+  const mockIsOpen = jest.fn(() => false);
+  global.isOpen = mockIsOpen
+
+  // Spy on the console.log method
+  const spy = jest.spyOn(console, 'log');
+
+  // Call the function and check that it produces the expected log message
+  expect(tictactoe.getValidSpace('X')).toBe(1);
+  expect(consoleSpy).toHaveBeenCalledWith('** Please enter a single digit from 1-9 for a space that is not occupied. **');
+
+  // Check that the prompt and isOpen functions were called twice with the correct arguments
+  expect(mockPrompt.mock.calls.length).toBe(2);
+  expect(isOpen.mock.calls.length).toBe(2);
+  expect(isOpen.mock.calls[0][0]).toBe(1);
+  expect(isOpen.mock.calls[1][0]).toBe(0);
+});
+
+
+
+
 
 })
 
-describe.skip.each("Reports wins correctly", () => {
+describe("Reports wins correctly", () => {
 
 		test("Correctly reports top row win", () => {
 				tictactoe.board[1] = X

@@ -2,6 +2,7 @@ const prompt = require('prompt-sync')({sigint: true})
 
 const X = 'X' 
 const Oh = 'O'
+let message = "" // not sure how else to test the error message with jest
 
 /*
 	 board layout
@@ -41,7 +42,6 @@ const topLeftToBottomRight = player  => board[1] === player && board[5] === play
 const topRightToBottomLeft = player  => board[3] === player && board[5] === player && board[7] === player
 
 const isWinner  = function (player) {
-log ("+is winner")
 	const win = 
 		top(player) ||
 		horizontalMiddle (player) ||
@@ -51,19 +51,15 @@ log ("+is winner")
 		right (player) ||
 		topLeftToBottomRight (player) ||
 		topRightToBottomLeft (player)
-		log("win is " + win)
-		log("- isWinner")
 		return win
 }
 
 const turn = function(player){
-  log("+ turn")
 	displayBoard()
 	itsYourTurn(player)
 
 	const space = getValidSpace(player);
 	placePlayer(player, Number(space))
-	log("place player")
 		if(isWinner(player)) { 
 			log( `\n! ! !         ! ! !` ) 
 			log( `! ! !  ${player} won  ! ! !` ) 
@@ -71,27 +67,22 @@ const turn = function(player){
 			displayBoard()
 			process.exit(0) 
 		}
-  log("- turn")
 }
 
 const round = function(){
-  log("+ round")
 	turn(X)
 	turn(Oh)
-  log("- round")
 }
 
+
 const getValidSpace = player => {
-  log("+ getValidSpace")
 	const space = Number(prompt())
 
-	if([1,2,3,4,5,6,7,8,9].includes(Number(space))){
-  log("- getValidSpace")
-			return space
-	} else if(space.length > 1){
-		log("\n \n ** Please enter a single digit from 1-9 for a space that is not occupied.  Here is the current board **")
-  log("- getValidSpace")
-		return getValidSpace (player, prompt())
+	if([1,2,3,4,5,6,7,8,9].includes(Number(space)) && isOpen(space)){
+				return space
+	} else {
+		log( "** Please enter a single digit from 1-9 for a space that is not occupied. **")
+		return getValidSpace (player)
 	}
 }
 
@@ -106,7 +97,6 @@ const game = function (){
 	turn(X)
 	console.log("There are no winners.")
 }
-
 
 	module.exports = {
 		game, 
@@ -124,5 +114,6 @@ const game = function (){
 		topLeftToBottomRight,
 		topRightToBottomLeft,
 		isOccupied,
-		isOpen
+		isOpen,
+		getValidSpace
 	}
