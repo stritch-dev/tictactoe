@@ -15,17 +15,27 @@ const board = ["not used", " ", " ", " ", " ", " ", " ", " ", " ", " " ]
 const isOpen = space => board[space] === " "
 const isOccupied = space => !isOpen(space)
 
-const displayBoard = function (){
+
+const explainatoryBoard = () => displayBoard(["not used","1","2","3","4","5","6","7","8","9"])
+const explain = () => {
+	log("\n Choose the space you want by pressing the corresponding number and then <Enter>\n")
+	explainatoryBoard() 
+	log("\n Let's begin.\n\n")
+}
+
+
+const displayBoard = function (customBoard){
 	const horizontal = "--|---|--\n"
 	const vertical = " | "
-	log( 
-	 board[1] + vertical + board[2] + vertical + board[3]  + "\n" +
-	 horizontal +
-	 board[4] + vertical + board[5] + vertical + board[6] + "\n" +
-	 horizontal +
-	 board[7] + vertical + board[8] + vertical + board[9]
-	)
+  const _board = customBoard === undefined ? board : customBoard
 
+		log( 
+		 " " + _board[1] + vertical + _board[2] + vertical + _board[3]  + "\n" +
+		 " " + horizontal +
+		 " " + _board[4] + vertical + _board[5] + vertical + _board[6] + "\n" +
+		 " " + horizontal +
+		 " " + _board[7] + vertical + _board[8] + vertical + _board[9]
+		)
 }
 
 const placePlayer = function (player, space){
@@ -61,10 +71,11 @@ const turn = function(player){
 	const space = getValidSpace(player);
 	placePlayer(player, Number(space))
 		if(isWinner(player)) { 
-			log( `\n! ! !         ! ! !` ) 
-			log( `! ! !  ${player} won  ! ! !` ) 
-			log( `! ! !         ! ! !` ) 
+			log( `\n ! ! !         ! ! !` ) 
+			log( ` ! ! !  ${player} won  ! ! !` ) 
+			log( ` ! ! !         ! ! !\n` ) 
 			displayBoard()
+			thanks()
 			process.exit(0) 
 		}
 }
@@ -76,7 +87,7 @@ const round = function(){
 
 
 const getValidSpace = player => {
-	const space = Number(prompt())
+	const space = Number(prompt(" "))
 
 	if([1,2,3,4,5,6,7,8,9].includes(Number(space)) && isOpen(space)){
 				return space
@@ -87,7 +98,8 @@ const getValidSpace = player => {
 }
 
 const log = function (value){ console.log(value) }
-const itsYourTurn = (player) =>	log(`${player}, it's your turn. `)
+const itsYourTurn = (player) =>	log(`\n ${player}, it's your turn. `)
+const thanks =  () => log("\n Thanks for playing.\n See you next time.\n")
 
 const game = function (){
 	round()
@@ -95,8 +107,11 @@ const game = function (){
 	round()
 	round()
 	turn(X)
-	console.log("There are no winners.")
+	console.log("\n\n There are no winners.") 
 }
+
+console.clear()
+explain()
 
 	module.exports = {
 		game, 

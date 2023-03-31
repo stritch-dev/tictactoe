@@ -75,11 +75,7 @@ test.skip('produces correct log message when input is invalid', () => {
   expect(isOpen.mock.calls.length).toBe(2);
   expect(isOpen.mock.calls[0][0]).toBe(1);
   expect(isOpen.mock.calls[1][0]).toBe(0);
-});
-
-
-
-
+  });
 
 })
 
