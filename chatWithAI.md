@@ -8,6 +8,7 @@ any problems?
 <details>
 <summary>see the code</summary>
 ```
+
 const prompt = require('prompt-sync')({sigint: true})
 
 const X = 'X'
