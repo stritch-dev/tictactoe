@@ -135,7 +135,6 @@ game()
 	}
 ```
 </details>
-</details>
 
 
 ### OpenAi Chat GPT
