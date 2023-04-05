@@ -1,31 +1,25 @@
 ## Meandering 'discussion' with AI.
 It started out with me trying to improve my Tic Tac Toe code. Then branched to having fun with the AI -- it even obliged me and wrote a Tic Tac Toe implementation in Solidty.
 
-
 ### Jd L
-any problems? 
-
+any problems with this code? 
 <details>
-<summary>see the code</summary>
+<summary>See the code</summary>
+
 ```
-
 const prompt = require('prompt-sync')({sigint: true})
-
 const X = 'X'
 const Oh = 'O'
 	// 	log("** That space has already been taken. **")
-
 /*
 	 board layout
 	 1, 2, 3,
 	 4, 5, 6,
 	 7, 8, 9
  */
-
 const board = ["not used", " ", " ", " ", " ", " ", " ", " ", " ", " " ]
 const isOccupied = space => board[space]
 const isOpen = space => !isOccupied(space)
-
 	const displayBoard = function (){
 		const horizontal = "--|---|--"
 			const verticalBar = " | "
@@ -40,11 +34,9 @@ const isOpen = space => !isOccupied(space)
 			log( horizontal )
 			log( bottom )
 	}
-
 const placePlayer = function (player, space){
 	isOpen(space) && (board[space] = player)
 }
-
 const top =                  player => board[1] === player && board[2] === player && board[3] === player
 const horizontalMiddle =     player => board[4] === player && board[5] === player && board[6] === player
 const bottom =               player  =>  board[7] === player && board[8] === player && board[9] === player
@@ -53,7 +45,6 @@ const verticalCenter =       player  => board[2] === player && board[5] === play
 const right =                player  => board[3] === player && board[6] === player && board[9] === player
 const topLeftToBottomRight = player  => board[1] === player && board[5] === player && board[9] === player
 const topRightToBottomLeft = player  => board[3] === player && board[5] === player && board[7] === player
-
 const isWinner  = function (player) {
  return
 		top(player) ||
@@ -66,7 +57,6 @@ const isWinner  = function (player) {
 		topRightToBottomLeft (player)
 }
 const turn = function(player){
-
 	displayBoard()
 	itsYourTurn(player)
 	const space = getValidSpace(player);
@@ -100,17 +90,17 @@ const log = function (value){ console.log(value) }
 const itsYourTurn = (player) =>	log(`${player}, it's your turn. `)
 const game = function (){
 	round()
-		round()
-		round()
-		round()
-		turn(X)
-		console.log("There are no winners.")
+    round()
+    round()
+    round()
+    turn(X)
+    console.log("There are no winners.")
 }
 game()
-	module.exports = { game, turn, placePlayer, displayBoard, board, isWinner, top, horizontalMiddle, bottom, left, verticalCenter, right, topLeftToBottomRight, topRightToBottomLeft }
+module.exports = { game, turn, placePlayer, displayBoard, board, isWinner, top, horizontalMiddle, bottom, left, verticalCenter, right, topLeftToBottomRight, topRightToBottomLeft }
 ```
-</details>
 
+</details>
 
 ### OpenAi Chat GPT
 There are a few potential problems with this code:
@@ -178,6 +168,8 @@ Sure! Here is an example of a purely functional implementation of Tic-Tac-Toe in
 
 <details>
 <summary>The ruby code provided by Chat GPT</summary>
+
+
 ```
 class TicTacToe
   def initialize
@@ -294,6 +286,8 @@ Sure! Here is an updated implementation of Tic-Tac-Toe with graceful exception h
 
 <details>
 <summary>The code provided</summary>
+
+```
 class TicTacToe
   def initialize
     @board = Array.new(3) { Array.new(3, " ") }
@@ -407,8 +401,12 @@ class TicTacToe
 
 ### Jd L
 refactor removing all optional syntax
+### OpenAI Chat GPT
 Sure, here's the refactored code with all optional syntax removed:
+<details>
+<summary>See the code</summary>
 
+```
 ruby
 Copy code
 class TicTacToe
@@ -503,7 +501,9 @@ class TicTacToe
     diagonal2 = [board[0][2], board[1][1], board[2][0]]
     return true if diagonal1.all? { |cell| cell == "X" }
     return true if diagonal1.all? { |cell| cell == "
+```
 
+</details>
 
 
 ### Jd L
@@ -536,20 +536,17 @@ class TicTacToe
   end
 end
 ```
+
 Note that this version sacrifices readability and may not be as maintainable as the previous versions, but it achieves brevity by using more concise syntax and chaining methods.
-
-
-
 
 ### Jd L
 thanks. can you implement tictactoe in solidity
 
-
 ### OpenAi Chat GPT
 Sure! Here's a basic implementation of Tic-Tac-Toe in Solidity:
 
-<details>
-<summary>The code provided</summary>
+<details><summary>See the code</summary>
+
 ```
 pragma solidity ^0.8.0;
 
@@ -591,7 +588,6 @@ contract TicTacToe {
 
         emit NextPlayer(currentPlayer);
     }
-
     function checkWin() private view returns (bool) {
         for (uint i = 0; i < 3; i++) {
             if (board[i][0] != 0 && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
@@ -610,7 +606,9 @@ contract TicTacToe {
         return false;
     }
 }
+```
 </details>
+
 Note that this implementation is very basic and can be improved upon. For example, it doesn't handle cases where a player tries to make a move after the game has ended, and it doesn't handle ties.
 
 
@@ -643,6 +641,7 @@ are there any errors in this javascript code
 
 <details>
 <summary> code provided </summary>
+
 ```
 const prompt = require('prompt-sync')({sigint: true})
 
@@ -769,6 +768,7 @@ module.exports = {
 	topRightToBottomLeft
 }
 ```
+</details>
 
 ### OpenAi Chat GPT
 There is one error in the code:
@@ -776,7 +776,8 @@ There is one error in the code:
 In the turn function, the turn(player) call within the if (space == null) condition does not pass the chosenSpace argument, which causes an error when the function is recursively called.
 To fix this error, you can update the line to turn(player, null).
 
-Here is the corrected code:
+<details><summary>Here is the corrected code:</summary>
+
 
 ```
 const prompt = require('prompt-sync')({sigint: true})
@@ -853,6 +854,8 @@ const turn = function(player, chosenSpace){
 		log(`force space = ${space} `)
 			log("\n \n ** Please enter a a single digit from
 ```
+</details>
+
 
 
 ### Jd L
@@ -986,6 +989,8 @@ This version of the function will return true if the input is not valid and prom
 
 ### Jd L
 i don't see where the user pompt is
+
+### OpenAi Chat GPT
 It's possible that the prompt is called in a separate part of the code. Can you share more of the code or context so that I can provide a more accurate answer?
 
 
@@ -993,8 +998,9 @@ It's possible that the prompt is called in a separate part of the code. Can you 
 
 ### Jd L
 can you find the problem in this code 
-<detail>
+<details>
 <summary>code provided</summary>
+
 ```
 const prompt = require('prompt-sync')({sigint: true})
 
@@ -1121,6 +1127,7 @@ game()
 		topRightToBottomLeft
 	}
 ```
+
 </details>
 
 ### OpenAi Chat GPT
@@ -1130,16 +1137,14 @@ isOccupied function is not defined. It should be replaced with isOpen function i
 The condition in getValidSpace function is wrong. Instead of return isOcuppied(space) it should be return space because if the space is not occupied it should return the space number entered by the player.
 space variable in getValidSpace function should be declared using let instead of const because it is reassigned inside the function.
 In getValidSpace function, if the length of space is greater than 1, the prompt should be called again instead of calling getValidSpace recursively.
-Here's the corrected code:
 
 <details>
-<summary>code provided</summary>
+<summary>Here's the corrected code:</summary>
+
 ```
 const prompt = require('prompt-sync')({sigint: true})
-
 const X = 'X'
 const Oh = 'O'
-	// 	log("** That space has already been taken. **")
 
 /*
 	 board layout
@@ -1150,7 +1155,6 @@ const Oh = 'O'
 
 const board = ["not used", " ", " ", " ", " ", " ", " ", " ", " ", " " ]
 const isOpen = space => board[space] === " "
-
 	const displayBoard = function (){
 		const horizontal = "--|---|--"
 			const verticalBar = " | "
@@ -1165,11 +1169,9 @@ const isOpen = space => board[space] === " "
 			log( horizontal )
 			log( bottom )
 	}
-
 const placePlayer = function (player, space){
 	isOpen(space) && (board[space] = player)
 }
-
 const top =                  player => board[1] === player && board[2] === player && board[3] === player
 const horizontalMiddle =     player => board[4] === player && board[5] === player && board[6] === player
 const bottom =               player  =>  board[7] === player && board[8] === player && board[9] === player
@@ -1178,7 +1180,6 @@ const verticalCenter =       player  => board[2] === player && board[5] === play
 const right =                player  => board[3] === player && board[6] === player && board[9] === player
 const topLeftToBottomRight = player  => board[1] === player && board[5] === player && board[9] === player
 const topRightToBottomLeft = player  => board[3] === player && board[5] === player && board[7] === player
-
 const isWinner  = function (player) {
  return
 		top(player) ||
@@ -1190,13 +1191,9 @@ const isWinner  = function (player) {
 		topLeftToBottomRight (player) ||
 		topRightToBottomLeft (player)
 }
-
 const turn = function(player){
-
 	displayBoard()
 	itsYourTurn(player)
-
 	const space = getValidSpace(player);
 ```
 </details>
-
