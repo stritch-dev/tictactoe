@@ -273,6 +273,7 @@ end
 
 TicTacToe.new.play
 ```
+</details>
 
 In this implementation, the update_board method returns a new board array with the updated move, instead of modifying the existing board array. Similarly, the switch_players method returns the new current player instead of modifying an
 
@@ -594,7 +595,7 @@ contract TicTacToe {
                 return true;
             }
             if (board[0][i] != 0 && board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
-                return true;
+                return trueu
             }
         }
         if (board[0][0] != 0 && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
