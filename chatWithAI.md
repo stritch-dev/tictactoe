@@ -64,12 +64,10 @@ const isWinner  = function (player) {
 		topLeftToBottomRight (player) ||
 		topRightToBottomLeft (player)
 }
-
 const turn = function(player){
 
 	displayBoard()
 	itsYourTurn(player)
-
 	const space = getValidSpace(player);
 		placePlayer(player, Number(space))
 		if(isWinner(player)) {
@@ -80,14 +78,11 @@ const turn = function(player){
 				process.exit(0)
 		}
 }
-
 const round = function(){
 	turn(X)
 		turn(Oh)
 }
-
 //		space =  getValidSpace (player, prompt())
-
 const getValidSpace = player => {
   const space = prompt()
 
@@ -100,12 +95,8 @@ const getValidSpace = player => {
 	}
 	return space;
 }
-
-
-
 const log = function (value){ console.log(value) }
 const itsYourTurn = (player) =>	log(`${player}, it's your turn. `)
-
 const game = function (){
 	round()
 		round()
@@ -114,25 +105,8 @@ const game = function (){
 		turn(X)
 		console.log("There are no winners.")
 }
-
 game()
-
-	module.exports = {
-		game,
-		turn,
-		placePlayer,
-		displayBoard,
-		board,
-		isWinner,
-		top,
-		horizontalMiddle,
-		bottom,
-		left,
-		verticalCenter,
-		right,
-		topLeftToBottomRight,
-		topRightToBottomLeft
-	}
+	module.exports = { game, turn, placePlayer, displayBoard, board, isWinner, top, horizontalMiddle, bottom, left, verticalCenter, right, topLeftToBottomRight, topRightToBottomLeft }
 ```
 </details>
 
