@@ -2,8 +2,6 @@
 It started out with me trying to improve my Tic Tac Toe code. Then branched to having fun with the AI -- it even obliged me and wrote a Tic Tac Toe implementation in Solidty.
 
 
-<details>
-<summary>Asking for proof-reading of my code</summary>
 ### Jd L
 any problems? 
 
