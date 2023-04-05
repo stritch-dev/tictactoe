@@ -1,4 +1,5 @@
 ## Meandering 'discussion' with AI.
+It started out with me trying to improve my Tic Tac Toe code. Then branched to having fun with the AI -- it even obliged me and wrote a Tic Tac Toe implementation in Solidty.
 
 
 <details>
@@ -7,7 +8,7 @@
 any problems? 
 
 <details>
-<summary>A long bit of code</summary>
+<summary>see the code</summary>
 ```
 const prompt = require('prompt-sync')({sigint: true})
 
@@ -135,6 +136,7 @@ game()
 		topRightToBottomLeft
 	}
 ```
+</details>
 </details>
 
 
